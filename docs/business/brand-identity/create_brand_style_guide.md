@@ -1,0 +1,1 @@
+![Generated Image for Create_Brand_Style_Guide](../assets/images/create_brand_style_guide_1.png)

@@ -1,0 +1,1 @@
+![Generated Image for Design_Promotional_Video_Storyboard](../assets/images/design_promotional_video_storyboard_1.png)

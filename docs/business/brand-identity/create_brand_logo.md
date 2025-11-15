@@ -1,0 +1,1 @@
+![Generated Image for Create_Brand_Logo](../assets/images/create_brand_logo_1.png)

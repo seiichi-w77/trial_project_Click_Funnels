@@ -1,0 +1,1 @@
+![Generated Image for Design_ROI_Infographic](../assets/images/design_roi_infographic_1.png)

@@ -1,0 +1,1 @@
+![Generated Image for Design_Website_Landing_Page_Mockup](../assets/images/design_website_landing_page_mockup_1.png)

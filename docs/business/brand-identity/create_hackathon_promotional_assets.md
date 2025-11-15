@@ -1,0 +1,1 @@
+![Generated Image for Create_Hackathon_Promotional_Assets](../assets/images/create_hackathon_promotional_assets_1.png)
