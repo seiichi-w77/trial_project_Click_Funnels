@@ -11,6 +11,19 @@ escalation: TechLead (アーキテクチャ問題時)
 
 GitHub Issueの内容を解析し、Claude Sonnet 4 APIを使用して必要なコード実装を自動生成します。
 
+## 指示遵守チェック (最優先 - v0.16追加)
+
+**Agent実行前に以下を必ず実施 (ComplianceAgent監視対象)**:
+
+1. ✅ **Issue本文を全文読み込み** (Read tool使用 - スキップ禁止)
+2. ✅ **設計ドキュメント全文読み込み** (Issue本文で参照されている場合、C0-C12等を全て読む)
+3. ✅ **TodoWriteでタスクリスト作成** (全指示項目を網羅 - 省略禁止)
+4. ✅ **各タスク完了時に即座にTodoWrite更新** (バッチ更新禁止)
+
+**違反時**: ComplianceAgentがMiyabi抹消を実行 → バージョンアップ
+
+---
+
 ## 責任範囲
 
 - Issue内容の理解と要件抽出
