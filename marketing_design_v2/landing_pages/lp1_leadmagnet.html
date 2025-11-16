@@ -5,538 +5,1019 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>セールスファネル診断チェックリスト（50項目）| Funnel DX</title>
     <meta name="description" content="あなたのセールスファネルの課題が10分で明確になる無料診断。ITが苦手な30代〜50代の女性経営者が、次々と成果を出しています。">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* ========== 基本設定 ========== */
+        /* ========== Jonathan Ive Design Philosophy ========== */
+        /*
+        1. Simplicity - 本質のみを残し、不要なものは削ぎ落とす
+        2. Precision - ピクセルパーフェクトな精密さ
+        3. Depth - 奥行きと階層を慎重に設計
+        4. Materials - 素材の質感を大切に
+        5. Functionality - 美しさと機能性の完璧な融合
+        */
+
+        /* ========== Reset & Foundation ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         :root {
-            --primary-navy: #1a2b4a;
-            --accent-orange: #ff6b35;
-            --light-gray: #f8f9fa;
-            --white: #ffffff;
-            --text-dark: #333333;
-            --text-light: #666666;
+            /* Colors - Refined palette */
+            --color-primary: #0A0E27;
+            --color-primary-light: #1A1F3A;
+            --color-accent: #FF6B47;
+            --color-accent-hover: #FF5230;
+            --color-surface: #FFFFFF;
+            --color-surface-elevated: #F5F7FA;
+            --color-surface-overlay: rgba(255, 255, 255, 0.95);
+            --color-text-primary: #0A0E27;
+            --color-text-secondary: #4A5568;
+            --color-text-tertiary: #718096;
+            --color-border: rgba(0, 0, 0, 0.06);
+            --color-border-focus: rgba(255, 107, 71, 0.4);
+
+            /* Spacing - Fibonacci sequence for harmony */
+            --space-xs: 8px;
+            --space-sm: 13px;
+            --space-md: 21px;
+            --space-lg: 34px;
+            --space-xl: 55px;
+            --space-2xl: 89px;
+            --space-3xl: 144px;
+
+            /* Typography */
+            --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.5rem;
+            --font-size-2xl: 2rem;
+            --font-size-3xl: 3rem;
+            --font-size-4xl: 4rem;
+
+            /* Effects */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.06);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.08);
+
+            /* Transitions - Precise timing */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Border radius - Consistent curves */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+        }
+
+        /* ========== Base Styles ========== */
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', 'Meiryo', sans-serif;
-            line-height: 1.8;
-            color: var(--text-dark);
-            background: var(--white);
+            font-family: var(--font-sans);
+            font-size: var(--font-size-base);
+            line-height: 1.7;
+            color: var(--color-text-primary);
+            background: var(--color-surface);
+            overflow-x: hidden;
         }
 
-        /* ========== レイアウト ========== */
+        /* ========== Layout System ========== */
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 var(--space-lg);
         }
 
-        /* ========== ヘッダー ========== */
-        header {
-            background: var(--primary-navy);
-            padding: 20px 0;
-            position: sticky;
+        .container-narrow {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        /* ========== Header - Minimal & Floating ========== */
+        .header {
+            position: fixed;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--color-surface-overlay);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--color-border);
+            transition: transform var(--transition-base);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
         }
 
         .logo {
-            color: var(--white);
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
         }
 
-        /* ========== ヒーローセクション ========== */
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A6B 100%);
+            border-radius: var(--radius-sm);
+        }
+
+        /* ========== Hero - Bold Statement ========== */
         .hero {
-            background: linear-gradient(135deg, var(--primary-navy) 0%, #2a3f5f 100%);
-            color: var(--white);
-            padding: 100px 0 80px;
+            position: relative;
+            padding: 200px 0 var(--space-3xl);
+            background: linear-gradient(180deg,
+                var(--color-primary) 0%,
+                var(--color-primary-light) 100%);
+            overflow: hidden;
+        }
+
+        /* Subtle geometric pattern background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 71, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 71, 0.05) 0%, transparent 50%);
+            opacity: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
             text-align: center;
         }
 
-        .hero h1 {
-            font-size: 36px;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-md);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            margin-bottom: var(--space-xl);
+            backdrop-filter: blur(10px);
         }
 
-        .hero h1 span {
-            color: var(--accent-orange);
-            border-bottom: 3px solid var(--accent-orange);
-            padding-bottom: 5px;
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--color-surface);
+            margin-bottom: var(--space-lg);
         }
 
-        .hero .subheadline {
-            font-size: 18px;
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A6B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-xl);
             font-weight: 400;
-            margin-bottom: 40px;
-            opacity: 0.9;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--space-2xl);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* ========== フォームセクション ========== */
+        /* ========== Form Section - Above the Fold ========== */
         .form-section {
-            background: var(--white);
-            padding: 60px 0;
+            position: relative;
+            margin-top: calc(var(--space-3xl) * -1);
+            padding-bottom: var(--space-3xl);
+            z-index: 2;
         }
 
-        .form-container {
-            max-width: 600px;
+        .form-card {
+            max-width: 540px;
             margin: 0 auto;
-            background: var(--light-gray);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: var(--color-surface);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+        }
+
+        .form-header {
+            padding: var(--space-xl);
+            text-align: center;
+            border-bottom: 1px solid var(--color-border);
         }
 
         .form-title {
-            font-size: 24px;
+            font-size: var(--font-size-xl);
             font-weight: 700;
-            color: var(--primary-navy);
-            margin-bottom: 30px;
-            text-align: center;
+            letter-spacing: -0.02em;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .form-description {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .form-body {
+            padding: var(--space-xl);
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: var(--space-lg);
         }
 
-        .form-group label {
+        .form-label {
             display: block;
-            font-size: 14px;
+            font-size: var(--font-size-sm);
             font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 8px;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-sm);
         }
 
-        .form-group input {
+        .form-label .required {
+            color: var(--color-accent);
+            margin-left: 2px;
+        }
+
+        .form-input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            padding: var(--space-md) var(--space-md);
+            font-family: var(--font-sans);
+            font-size: var(--font-size-base);
+            color: var(--color-text-primary);
+            background: var(--color-surface-elevated);
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
         }
 
-        .form-group input:focus {
+        .form-input:focus {
             outline: none;
-            border-color: var(--accent-orange);
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+            background: var(--color-surface);
+            border-color: var(--color-border-focus);
+            box-shadow: 0 0 0 4px rgba(255, 107, 71, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--color-text-tertiary);
         }
 
         .cta-button {
             width: 100%;
-            background: var(--accent-orange);
-            color: var(--white);
-            border: none;
-            padding: 18px 40px;
-            font-size: 18px;
+            padding: var(--space-md) var(--space-lg);
+            font-family: var(--font-sans);
+            font-size: var(--font-size-lg);
             font-weight: 700;
-            border-radius: 8px;
+            color: var(--color-surface);
+            background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A6B 100%);
+            border: none;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all var(--transition-base);
+            box-shadow: 0 4px 20px rgba(255, 107, 71, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--color-accent-hover) 0%, var(--color-accent) 100%);
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+
+        .cta-button:hover::before {
+            opacity: 1;
         }
 
         .cta-button:hover {
-            background: #ff5520;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 8px 30px rgba(255, 107, 71, 0.35);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-footer {
+            padding: 0 var(--space-xl) var(--space-xl);
+            text-align: center;
         }
 
         .privacy-note {
-            font-size: 12px;
-            color: var(--text-light);
-            text-align: center;
-            margin-top: 15px;
+            font-size: var(--font-size-xs);
+            color: var(--color-text-tertiary);
+            line-height: 1.6;
         }
 
-        /* ========== ベネフィットセクション ========== */
+        .privacy-note a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .privacy-note a:hover {
+            color: var(--color-accent-hover);
+        }
+
+        /* ========== Stats Bar - Social Proof ========== */
+        .stats-bar {
+            padding: var(--space-2xl) 0;
+            background: var(--color-surface-elevated);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-xl);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-3xl);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--color-accent);
+            margin-bottom: var(--space-xs);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--color-text-secondary);
+        }
+
+        /* ========== Benefits - Three Column ========== */
         .benefits {
-            padding: 80px 0;
-            background: var(--light-gray);
+            padding: var(--space-3xl) 0;
+        }
+
+        .section-header {
+            max-width: 700px;
+            margin: 0 auto var(--space-2xl);
+            text-align: center;
         }
 
         .section-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary-navy);
-            text-align: center;
-            margin-bottom: 60px;
+            font-size: var(--font-size-3xl);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-md);
         }
 
-        .benefit-cards {
+        .section-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: var(--space-xl);
         }
 
         .benefit-card {
-            background: var(--white);
-            padding: 40px 30px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            padding: var(--space-xl);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-base);
         }
 
         .benefit-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 107, 71, 0.2);
         }
 
         .benefit-icon {
-            font-size: 48px;
-            color: var(--accent-orange);
-            margin-bottom: 20px;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: linear-gradient(135deg, rgba(255, 107, 71, 0.1) 0%, rgba(255, 138, 107, 0.1) 100%);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-md);
         }
 
-        .benefit-card h3 {
-            font-size: 20px;
+        .benefit-title {
+            font-size: var(--font-size-xl);
             font-weight: 700;
-            color: var(--primary-navy);
-            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-sm);
         }
 
-        .benefit-card p {
-            font-size: 15px;
-            color: var(--text-light);
-            line-height: 1.8;
+        .benefit-description {
+            font-size: var(--font-size-base);
+            line-height: 1.7;
+            color: var(--color-text-secondary);
         }
 
-        /* ========== 社会的証明セクション ========== */
-        .social-proof {
-            padding: 80px 0;
-            background: var(--white);
+        /* ========== Testimonials - Carousel Style ========== */
+        .testimonials {
+            padding: var(--space-3xl) 0;
+            background: linear-gradient(180deg,
+                var(--color-surface) 0%,
+                var(--color-surface-elevated) 100%);
         }
 
-        .testimonial {
-            background: var(--light-gray);
-            padding: 40px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border-left: 4px solid var(--accent-orange);
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-2xl);
+        }
+
+        .testimonial-card {
+            padding: var(--space-xl);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            position: relative;
+            transition: all var(--transition-base);
+        }
+
+        .testimonial-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         .testimonial-header {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
         }
 
         .testimonial-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--accent-orange);
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
             font-weight: 700;
-            font-size: 20px;
-            margin-right: 15px;
+            font-size: var(--font-size-xl);
+            color: var(--color-surface);
+            background: linear-gradient(135deg, var(--color-accent) 0%, #FF8A6B 100%);
+            border-radius: var(--radius-full);
+            flex-shrink: 0;
         }
 
-        .testimonial-info h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary-navy);
-            margin-bottom: 5px;
+        .testimonial-meta h4 {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
         }
 
-        .testimonial-info p {
-            font-size: 14px;
-            color: var(--text-light);
+        .testimonial-meta p {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-tertiary);
         }
 
-        .testimonial-text {
-            font-size: 15px;
-            line-height: 1.8;
-            color: var(--text-dark);
+        .testimonial-quote {
+            font-size: var(--font-size-base);
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
         }
 
         .testimonial-result {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #ddd;
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--color-border);
+            font-size: var(--font-size-sm);
             font-weight: 600;
-            color: var(--accent-orange);
+            color: var(--color-accent);
         }
 
-        /* ========== FAQ セクション ========== */
+        /* ========== FAQ - Accordion ========== */
         .faq {
-            padding: 80px 0;
-            background: var(--light-gray);
+            padding: var(--space-3xl) 0;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .faq-item {
-            background: var(--white);
-            padding: 25px 30px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-md);
+            overflow: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .faq-item:hover {
+            box-shadow: var(--shadow-sm);
         }
 
         .faq-question {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-navy);
-            margin-bottom: 10px;
+            padding: var(--space-lg);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-md);
         }
 
         .faq-answer {
-            font-size: 15px;
-            color: var(--text-light);
-            line-height: 1.8;
+            padding: 0 var(--space-lg) var(--space-lg);
+            font-size: var(--font-size-base);
+            line-height: 1.7;
+            color: var(--color-text-secondary);
         }
 
-        /* ========== フッター ========== */
-        footer {
-            background: var(--primary-navy);
-            color: var(--white);
-            padding: 40px 0;
+        /* ========== Final CTA ========== */
+        .final-cta {
+            padding: var(--space-3xl) 0;
+            background: linear-gradient(135deg,
+                var(--color-primary) 0%,
+                var(--color-primary-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 30% 50%, rgba(255, 107, 71, 0.1) 0%, transparent 50%);
+        }
+
+        .final-cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
             text-align: center;
         }
 
-        footer p {
-            font-size: 14px;
-            opacity: 0.8;
+        .final-cta-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--color-surface);
+            margin-bottom: var(--space-md);
         }
 
-        /* ========== レスポンシブ ========== */
+        .final-cta-subtitle {
+            font-size: var(--font-size-lg);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--space-xl);
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            padding: var(--space-xl) 0;
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        .footer-link {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--color-accent);
+        }
+
+        .footer-copyright {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-tertiary);
+        }
+
+        /* ========== Responsive Design ========== */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 28px;
+            :root {
+                --space-xl: 34px;
+                --space-2xl: 55px;
+                --space-3xl: 89px;
             }
 
-            .hero .subheadline {
-                font-size: 16px;
+            .hero {
+                padding: 144px 0 var(--space-2xl);
             }
 
-            .form-container {
-                padding: 30px 20px;
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: var(--font-size-lg);
             }
 
             .section-title {
-                font-size: 26px;
+                font-size: var(--font-size-2xl);
             }
 
-            .benefit-cards {
+            .benefits-grid,
+            .testimonials-grid {
                 grid-template-columns: 1fr;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg);
+            }
+        }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
     </style>
 </head>
 <body>
-    <!-- ヘッダー -->
-    <header>
-        <div class="container">
-            <div class="logo">FUNNEL DX</div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                FUNNEL DX
+            </div>
         </div>
     </header>
 
-    <!-- ヒーローセクション -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>
-                あなたのセールスファネルの課題が<br>
-                <span>10分で明確になる</span>無料診断
-            </h1>
-            <p class="subheadline">
-                ITが苦手な30代〜50代の女性経営者が、次々と成果を出しています
-            </p>
-        </div>
-    </section>
-
-    <!-- フォームセクション -->
-    <section class="form-section">
-        <div class="container">
-            <div class="form-container">
-                <h2 class="form-title">今すぐ無料診断を受け取る</h2>
-                <form action="/submit" method="POST">
-                    <div class="form-group">
-                        <label for="name">お名前 <span style="color: var(--accent-orange);">*</span></label>
-                        <input type="text" id="name" name="name" placeholder="山田 花子" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">メールアドレス <span style="color: var(--accent-orange);">*</span></label>
-                        <input type="email" id="email" name="email" placeholder="example@email.com" required>
-                    </div>
-                    <button type="submit" class="cta-button">
-                        今すぐ無料診断を受け取る
-                    </button>
-                    <p class="privacy-note">
-                        ※ご登録いただいたメールアドレスには、有益な情報をお届けします。<br>
-                        いつでも配信解除できます。
-                    </p>
-                </form>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    ✨ 累計50社が成果を出した診断ツール
+                </div>
+                <h1 class="hero-title">
+                    あなたのファネルの課題が<br>
+                    <span class="highlight">10分で明確になる</span><br>
+                    無料診断
+                </h1>
+                <p class="hero-subtitle">
+                    ITが苦手な30代〜50代の女性経営者が、<br>
+                    次々と成果を出しています
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- ベネフィットセクション -->
+    <!-- Form Section (Above the Fold) -->
+    <section class="form-section">
+        <div class="container">
+            <div class="form-card">
+                <div class="form-header">
+                    <h2 class="form-title">今すぐ無料診断を受け取る</h2>
+                    <p class="form-description">
+                        メールアドレス登録後、即座にダウンロードリンクをお送りします
+                    </p>
+                </div>
+                <form class="form-body" action="/submit" method="POST">
+                    <div class="form-group">
+                        <label class="form-label" for="name">
+                            お名前<span class="required">*</span>
+                        </label>
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="山田 花子"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">
+                            メールアドレス<span class="required">*</span>
+                        </label>
+                        <input
+                            class="form-input"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@email.com"
+                            required
+                        >
+                    </div>
+                    <button type="submit" class="cta-button">
+                        <span>無料で診断を受け取る →</span>
+                    </button>
+                </form>
+                <div class="form-footer">
+                    <p class="privacy-note">
+                        ご登録いただいたメールアドレスには、有益な情報をお届けします。<br>
+                        いつでも配信解除できます。<a href="/privacy">プライバシーポリシー</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar (Social Proof) -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">250%</div>
+                    <div class="stat-label">平均売上成長率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">90%</div>
+                    <div class="stat-label">ファネル完成率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">支援実績数</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
     <section class="benefits">
         <div class="container">
-            <h2 class="section-title">この診断で得られる3つのこと</h2>
-            <div class="benefit-cards">
+            <div class="section-header">
+                <h2 class="section-title">この診断で得られる3つのこと</h2>
+                <p class="section-subtitle">
+                    プロが使用している診断ツールを、完全無料で提供します
+                </p>
+            </div>
+            <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon">📊</div>
-                    <h3>ファネルの課題が明確に</h3>
-                    <p>50項目のチェックリストで、あなたのファネルのどこに問題があるのかが一目瞭然。リード獲得、育成、成約、フォローの各段階を徹底診断します。</p>
+                    <h3 class="benefit-title">課題の可視化</h3>
+                    <p class="benefit-description">
+                        50項目のチェックリストで、あなたのファネルのどこに問題があるのかが一目瞭然。リード獲得、育成、成約、フォローの各段階を徹底診断します。
+                    </p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🎯</div>
-                    <h3>改善アクションリスト</h3>
-                    <p>診断結果に基づいて、今すぐ実行できる具体的な改善アクションをご提案。優先順位をつけて、効率的に成果を出せます。</p>
+                    <h3 class="benefit-title">改善アクション</h3>
+                    <p class="benefit-description">
+                        診断結果に基づいて、今すぐ実行できる具体的な改善アクションをご提案。優先順位をつけて、効率的に成果を出せます。
+                    </p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">📐</div>
-                    <h3>ファネル設計図テンプレート</h3>
-                    <p>プロが使用しているファネル設計図のテンプレートをプレゼント。このテンプレートに沿って作れば、誰でも成果の出るファネルが構築できます。</p>
+                    <h3 class="benefit-title">設計図テンプレート</h3>
+                    <p class="benefit-description">
+                        プロが使用しているファネル設計図のテンプレートをプレゼント。このテンプレートに沿って作れば、誰でも成果の出るファネルが構築できます。
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 社会的証明セクション -->
-    <section class="social-proof">
+    <!-- Testimonials Section -->
+    <section class="testimonials">
         <div class="container">
-            <h2 class="section-title">成果を出された方の声</h2>
-
-            <div class="testimonial">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">A</div>
-                    <div class="testimonial-info">
-                        <h4>A様（40代・キャリアコーチ）</h4>
-                        <p>プレミアムプラン</p>
-                    </div>
-                </div>
-                <div class="testimonial-text">
-                    「ワタナベさんと出会う前は、毎日Instagram投稿に追われて、本来のコーチングに集中できませんでした。ファネルを作ってからは、広告が自動でお客様を連れてきてくれるので、Instagram投稿は週3回だけ。それなのに、以前の6倍の売上です。」
-                </div>
-                <div class="testimonial-result">
-                    成果: 月商30万円 → 180万円（600%成長）
-                </div>
+            <div class="section-header">
+                <h2 class="section-title">成果を出された方の声</h2>
+                <p class="section-subtitle">
+                    累計50社以上が、平均250%の売上成長を実現しています
+                </p>
             </div>
-
-            <div class="testimonial">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">B</div>
-                    <div class="testimonial-info">
-                        <h4>B様（30代・Webデザインスクール運営）</h4>
-                        <p>スタンダードプラン</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">A</div>
+                        <div class="testimonial-meta">
+                            <h4>A様（40代・キャリアコーチ）</h4>
+                            <p>プレミアムプラン</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">
+                        「ワタナベさんと出会う前は、毎日Instagram投稿に追われて、本来のコーチングに集中できませんでした。ファネルを作ってからは、広告が自動でお客様を連れてきてくれるので、Instagram投稿は週3回だけ。それなのに、以前の6倍の売上です。」
+                    </p>
+                    <div class="testimonial-result">
+                        月商30万円 → 180万円（600%成長）
                     </div>
                 </div>
-                <div class="testimonial-text">
-                    「以前は、交流会に行っても月1-2名しか受講生が集まらず、『来月、生徒が来なかったらどうしよう…』と不安でした。ファネルを作ってからは、毎月50件のリードが獲得できて、そのうち10-15%が個別相談に来てくれます。」
-                </div>
-                <div class="testimonial-result">
-                    成果: 月商50万円 → 120万円（240%成長）
-                </div>
-            </div>
 
-            <div class="testimonial">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">C</div>
-                    <div class="testimonial-info">
-                        <h4>C様（50代・オーガニックコスメEC）</h4>
-                        <p>VIPプラン</p>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">B</div>
+                        <div class="testimonial-meta">
+                            <h4>B様（30代・Webデザインスクール）</h4>
+                            <p>スタンダードプラン</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">
+                        「以前は、交流会に行っても月1-2名しか受講生が集まらず、『来月、生徒が来なかったらどうしよう…』と不安でした。ファネルを作ってからは、毎月50件のリードが獲得できて、そのうち10-15%が個別相談に来てくれます。」
+                    </p>
+                    <div class="testimonial-result">
+                        月商50万円 → 120万円（240%成長）
                     </div>
                 </div>
-                <div class="testimonial-text">
-                    「以前は、広告を出しても赤字でした。新規顧客獲得に1件8,000円かかり、初回購入が平均6,000円なので、完全に赤字…。ワタナベさんに相談して、ファネルを作り直したら、新規顧客獲得コストが1,200円に! しかも、初回購入額も平均12,000円に上がりました。」
-                </div>
-                <div class="testimonial-result">
-                    成果: 月商80万円 → 350万円（437%成長）
+
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">C</div>
+                        <div class="testimonial-meta">
+                            <h4>C様（50代・オーガニックコスメEC）</h4>
+                            <p>VIPプラン</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-quote">
+                        「以前は、広告を出しても赤字でした。ワタナベさんに相談して、ファネルを作り直したら、新規顧客獲得コストが1,200円に! しかも、初回購入額も平均12,000円に上がりました。」
+                    </p>
+                    <div class="testimonial-result">
+                        月商80万円 → 350万円（437%成長）
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ セクション -->
+    <!-- FAQ Section -->
     <section class="faq">
         <div class="container">
-            <h2 class="section-title">よくあるご質問</h2>
-
-            <div class="faq-item">
-                <div class="faq-question">Q. 本当に無料ですか？</div>
-                <div class="faq-answer">
-                    はい、完全無料です。診断チェックリスト、改善アクションリスト、ファネル設計図テンプレート、全て無料で差し上げます。クレジットカード情報の入力も不要です。
-                </div>
+            <div class="section-header">
+                <h2 class="section-title">よくあるご質問</h2>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Q. ITが苦手でも大丈夫ですか？</div>
-                <div class="faq-answer">
-                    はい、大丈夫です。診断チェックリストは、専門用語を使わず、誰でも理解できる内容になっています。また、ファネル設計図テンプレートも、図解で分かりやすく説明しています。
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">Q. 本当に無料ですか？</div>
+                    <div class="faq-answer">
+                        はい、完全無料です。診断チェックリスト、改善アクションリスト、ファネル設計図テンプレート、全て無料で差し上げます。クレジットカード情報の入力も不要です。
+                    </div>
                 </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">Q. 診断後、営業されませんか？</div>
-                <div class="faq-answer">
-                    診断チェックリストをダウンロード後、7日間のステップメールで有益な情報をお届けします。その中で、無料個別相談のご案内をさせていただきますが、無理な勧誘は一切ありません。
+                <div class="faq-item">
+                    <div class="faq-question">Q. ITが苦手でも大丈夫ですか？</div>
+                    <div class="faq-answer">
+                        はい、大丈夫です。診断チェックリストは、専門用語を使わず、誰でも理解できる内容になっています。また、ファネル設計図テンプレートも、図解で分かりやすく説明しています。
+                    </div>
                 </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">Q. どんな業種でも使えますか？</div>
-                <div class="faq-answer">
-                    はい、ほとんどの業種で使えます。コーチング、コンサルティング、オンラインスクール、EC・物販、士業など、幅広い業種の方が成果を出しています。
+                <div class="faq-item">
+                    <div class="faq-question">Q. 診断後、営業されませんか？</div>
+                    <div class="faq-answer">
+                        診断チェックリストをダウンロード後、7日間のステップメールで有益な情報をお届けします。その中で、無料個別相談のご案内をさせていただきますが、無理な勧誘は一切ありません。
+                    </div>
                 </div>
-            </div>
 
-            <div class="faq-item">
-                <div class="faq-question">Q. いつ診断チェックリストが届きますか？</div>
-                <div class="faq-answer">
-                    メールアドレス登録後、即座に自動返信メールでダウンロードリンクをお送りします。迷惑メールフォルダに入ることがあるので、届かない場合はそちらもご確認ください。
+                <div class="faq-item">
+                    <div class="faq-question">Q. どんな業種でも使えますか？</div>
+                    <div class="faq-answer">
+                        はい、ほとんどの業種で使えます。コーチング、コンサルティング、オンラインスクール、EC・物販、士業など、幅広い業種の方が成果を出しています。
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q. いつ診断チェックリストが届きますか？</div>
+                    <div class="faq-answer">
+                        メールアドレス登録後、即座に自動返信メールでダウンロードリンクをお送りします。迷惑メールフォルダに入ることがあるので、届かない場合はそちらもご確認ください。
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTAセクション（フッター前） -->
-    <section class="form-section">
+    <!-- Final CTA -->
+    <section class="final-cta">
         <div class="container">
-            <div class="form-container">
-                <h2 class="form-title">今すぐ無料診断を受け取る</h2>
-                <form action="/submit" method="POST">
-                    <div class="form-group">
-                        <label for="name2">お名前 <span style="color: var(--accent-orange);">*</span></label>
-                        <input type="text" id="name2" name="name" placeholder="山田 花子" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email2">メールアドレス <span style="color: var(--accent-orange);">*</span></label>
-                        <input type="email" id="email2" name="email" placeholder="example@email.com" required>
-                    </div>
-                    <button type="submit" class="cta-button">
-                        今すぐ無料診断を受け取る
-                    </button>
-                    <p class="privacy-note">
-                        ※ご登録いただいたメールアドレスには、有益な情報をお届けします。<br>
-                        いつでも配信解除できます。
-                    </p>
-                </form>
+            <div class="final-cta-content">
+                <h2 class="final-cta-title">
+                    今すぐ無料診断を受け取る
+                </h2>
+                <p class="final-cta-subtitle">
+                    あなたのファネルの課題を、10分で明確にしませんか？
+                </p>
+                <div class="form-card" style="max-width: 480px;">
+                    <form class="form-body" action="/submit" method="POST">
+                        <div class="form-group">
+                            <input
+                                class="form-input"
+                                type="text"
+                                name="name"
+                                placeholder="お名前"
+                                required
+                            >
+                        </div>
+                        <div class="form-group">
+                            <input
+                                class="form-input"
+                                type="email"
+                                name="email"
+                                placeholder="メールアドレス"
+                                required
+                            >
+                        </div>
+                        <button type="submit" class="cta-button">
+                            <span>無料で診断を受け取る →</span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- フッター -->
-    <footer>
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Funnel DX by ワタナベ セイイチ. All rights reserved.</p>
-            <p style="margin-top: 10px;">
-                <a href="/privacy" style="color: var(--white); opacity: 0.8; text-decoration: none;">プライバシーポリシー</a> |
-                <a href="/terms" style="color: var(--white); opacity: 0.8; text-decoration: none;">利用規約</a>
+            <div class="footer-links">
+                <a href="/privacy" class="footer-link">プライバシーポリシー</a>
+                <a href="/terms" class="footer-link">利用規約</a>
+                <a href="/contact" class="footer-link">お問い合わせ</a>
+            </div>
+            <p class="footer-copyright">
+                &copy; 2025 Funnel DX by ワタナベ セイイチ. All rights reserved.
             </p>
         </div>
     </footer>
